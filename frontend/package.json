@@ -9,22 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.0.4",
+    "axios": "^1.6.3",
     "bootstrap": "^5.3.2",
     "dotenv": "^16.3.1",
     "ethers": "^5.7.1",
+    "fs": "^0.0.1-security",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
     "sweetalert2": "^11.9.0",
-    "swiper": "^11.0.4",
-    "fs": "^0.0.1-security"
+    "swiper": "^11.0.4"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.0.4"
+    "eslint-config-next": "14.0.4",
+    "typescript": "^5"
   }
 }
