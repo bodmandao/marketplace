@@ -4,7 +4,6 @@ require('dotenv').config()
 
 module.exports = async function(){
     // automatic abi and address updates to frontend upon deployment
-    if (process.env.UPDATE_FRONTEND) {
         console.log('-----------------updating--------frontend-------------parameters');
         const ABI = '../frontend/constants/abi.json'  // abi location
         const ADDRESS = '../frontend/constants/address.json' // contract address location
@@ -19,5 +18,4 @@ module.exports = async function(){
         fs.writeFileSync(ABI,abi)
         console.log('----------updated----abi---')
 
-    }
 }
