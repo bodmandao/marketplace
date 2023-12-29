@@ -5,23 +5,23 @@ import { FREELANCER_CONTEXT} from '../API/MarketPlace'
 import FreelancerProps from "@/app/interfaces/freelancerProps"
 import Link from 'next/link'
 
-function MyHiredJobsListing(){
+
+function AllJobs(){
     // import context apis
     const {
-        account,getFreelancerHiredJobs,jobs,withdrawEarnings,freelancerDetails,currentFreelancerDetails
+        account,freelancerDetails,retrieveAllJobs,jobs,applyJob,currentFreelancerDetails
     } = useContext(FREELANCER_CONTEXT) as FreelancerProps
 
     useEffect(()=>{
+        retrieveAllJobs()
         if (account) {
-            getFreelancerHiredJobs(account) // retrieve all jobs where current freelancer is hired
             freelancerDetails(account) // retrieve current freelancer details            
-        }
-        
-    },[account])
+        }        
+    })
 
     return(
         // all jobs
-        <section className="pt30 pb90 bg-white my-5">
+        <section className="pt30 pb90 bg-white my-5 ">
             <div className="container">
                 <div className="row">
                  
@@ -40,7 +40,7 @@ function MyHiredJobsListing(){
                                             <li>
                                                 {/* Advance Features modal trigger  */}
                                                 <button type="button" className="open-btn filter-btn-left"> <img className="me-2"
-                                                src="/images/icon/all-filter-icon.svg" alt="" /> All Filter</button>
+                        src="/images/icon/all-filter-icon.svg" alt="" /> All Filter</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -48,7 +48,6 @@ function MyHiredJobsListing(){
                             </div>
                         </div>
                         <div className="row">
-                            {/* render all jobs */}
                             {jobs? jobs.map((job : any)=>(
                             <div className="col-sm-6 col-xl-12 shadow p-2" key={job.id}>
                             <div className="job-list-style1 bdr1 d-xl-flex align-items-start">
@@ -57,13 +56,26 @@ function MyHiredJobsListing(){
                                     <span className="fav-icon flaticon-star"></span>
                                 </div>
                                 <div className="details ml20 ml0-xl">
+                                    {/* job details */}
+
                                     <p>{job.description}</p>
                                     <h4 className="mb-3 text-thm">{job.title}</h4>
                                     <p className="list-inline-item mb-0">{job.budget.toString()} CELO</p>
-                                    <p className="list-inline-item mb-0 bdrl1 pl15">{job.completed ? 'Expired' : 'Ongoing'}</p>
+                                    <p className="list-inline-item mb-0 bdrl1 pl15">{job.completed ? 'Expired' : ''}</p>
                                     <p className="list-inline-item mb-0 bdrl1 pl15">Remote</p>
-                                    <Link href={'/single-job/'+job.id}>View Job</Link>
-                                    {/* <Link href={'/chat'}>Enter Chat Room</Link> */}
+                                    <Link style={{"textDecoration":"none"}} href={'/single-job/'+job.id}>View Job</Link>
+                                    {/* check if user is a registered freelancer and not already applied for the job*/}
+                                    {currentFreelancerDetails?.registered && !job.applicants.includes(currentFreelancerDetails.freelancerAddress)? (
+                                        <button className="btn-primary btn-sm btn mx-1 text-white" 
+                                        onClick={()=>applyJob(job.id.toString())} type="button">Apply</button>
+                                    ): 
+                                    currentFreelancerDetails?.registered && job.applicants.includes(currentFreelancerDetails.freelancerAddress)?
+                                    (
+                                        <i> Applied</i>
+                                    )
+                                    :
+                                    ('')
+                                }
                                 </div>
                             </div>
                             </div>
@@ -81,4 +93,4 @@ function MyHiredJobsListing(){
         </section>
     )
 }
-export default MyHiredJobsListing
+export default AllJobs

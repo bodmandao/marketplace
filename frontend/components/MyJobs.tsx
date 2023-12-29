@@ -21,6 +21,13 @@ function MyJobs(){
     return(
         // all jobs
         <section className="pt30 pb90 bg-white my-5">
+            <style jsx>
+                {`
+                    .link{
+                        text-decoration : none;
+                    }
+                `}
+            </style>
             <div className="container">
                 <div className="row">
                  
@@ -49,7 +56,7 @@ function MyJobs(){
                             {/* render jobs */}
                             {jobs? jobs.map((job : any)=>(
                             //   {{retrieveEscrow()}}
-                            <div className="col-sm-6 col-xl-12 shadow P-2" key={job.id}>
+                            <div className="col-sm-6 col-xl-12 shadow p-2" key={job.id}>
                             <div className="job-list-style1 d-xl-flex align-items-start">
                                 <div className="icon d-flex align-items-center mb20">
                                     {/* <img className="wa" src="/images/team/client-1.png" alt="" /> */}
@@ -65,7 +72,7 @@ function MyJobs(){
                                         // onClick={()=>completeJob(job.id.toString(),job.hiredFreelancer)}>Mark as completed</button>
                                     )}</p>
                                     <p className="list-group-item mb-0 bdrl1 pl15">Remote</p>
-                                    <Link href={'/single-job/'+job.id}>View Job</Link>
+                                    <Link style={{"textDecoration":"none"}} className='link' href={'/single-job/'+job.id}>View Job</Link>
                                     <div className="card mt-4">
                                         <div className="card-body">
                                             <h4 className="card-title">Applicants</h4>
@@ -77,15 +84,15 @@ function MyJobs(){
                                                         <li className="list-group-item text-primary">
                                                             {`${applicant.slice(0,6)}...${applicant.slice(applicant.length -4)}`}
                                                         </li>
-                                                        <Link className="d-flex mt-2" href={'/freelancer/'+applicant}>View Applicant</Link>
+                                                        <Link className="link d-flex mt-2" style={{"textDecoration":"none"}} href={'/freelancer/'+applicant}>View Applicant</Link>
                                                         {!job.hiredFreelancer.includes('0x000000000000')? (
                                                             <>
                                                                 <p className="mt-2 mx-2">Hired 
                                                                 {` ${job.hiredFreelancer.slice(0,6)}...${job.hiredFreelancer.slice(job.hiredFreelancer.length -4)}`}
                                                                 </p>
-                                                                <Link className='mt-2 text-primary'
+                                                                {/* <Link className='mt-2 link text-primary'
                                                                  href={'/chat/'+`buyer@${job.hiredFreelancer?.slice(0,6)}&seller@${account?.slice(0,6)}`}
-                                                                 >Enter Chat Room</Link>
+                                                                 >Enter Chat Room</Link> */}
                                                             </>
                                                            
                                                         ):

@@ -22,7 +22,7 @@ function SingleJobListing({id} : any){
     })
 
     return(
-        <section className="pt30 pb90 bg-white">
+        <section className="pt30 pb90 bg-white my-5">
             <div className="container">
                 <div className="row">
                  
@@ -51,7 +51,7 @@ function SingleJobListing({id} : any){
                         <div className="row">
                             {singleJob? (
                             //   {{retrieveEscrow()}}
-                            <div className="col-sm-6 col-xl-12">
+                            <div className="col-sm-6 col-xl-12 shadow p-2">
                             <div className="job-list-style1 bdr1 d-xl-flex align-items-start">
                                 <div className="icon d-flex align-items-center mb20">
                                     {/* <img className="wa" src="/images/team/client-1.png" alt="" /> */}
