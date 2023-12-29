@@ -2,12 +2,11 @@
 pragma solidity ^0.8.0;
 import "./Job.sol";
 
-
 contract Employers is Djob{
 
     
     /// @notice retrieves employer by address
-    /// @param _employer, address
+    /// @param _employer,  address
     /// @return props
     function getEmployerByAddress(address _employer) external view returns(Employer memory props){
         props = employers[_employer];
