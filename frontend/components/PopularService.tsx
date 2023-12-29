@@ -95,7 +95,7 @@ function PopularService(){
                            <div key={freelancer.freelancerAddress}>
                             <SwiperSlide >
                             <div className="card" style={{"width":"18rem"}}>
-                            <Image className="card-img-top" loader={()=>freelancer.images[1]}
+                            <img className="card-img-top" 
                              src={freelancer.images[1]} alt="Gig Image" />
 
                             <div className="card-body">

@@ -93,7 +93,7 @@ function Navbar(){
                         (
                             
                             <button className="btn btn-warning" >
-                                    <span className="badge bg-primary">{employerBal} INJ</span>
+                                    <span className="badge bg-primary">{employerBal} CELO</span>
                         </button>
                         ): ''
                     }
@@ -105,7 +105,7 @@ function Navbar(){
                         (
                             
                             <button className="btn btn-warning" >
-                                    <span className="badge bg-primary">{freelancerBal} INJ</span>
+                                    <span className="badge bg-primary">{freelancerBal} CELO</span>
                         </button>
                         ): ''
                     }
