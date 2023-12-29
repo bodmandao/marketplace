@@ -20,7 +20,7 @@ function MyJobs(){
 
     return(
         // all jobs
-        <section className="pt30 pb90 bg-white">
+        <section className="pt30 pb90 bg-white my-5">
             <div className="container">
                 <div className="row">
                  
@@ -49,8 +49,8 @@ function MyJobs(){
                             {/* render jobs */}
                             {jobs? jobs.map((job : any)=>(
                             //   {{retrieveEscrow()}}
-                            <div className="col-sm-6 col-xl-12" key={job.id}>
-                            <div className="job-list-style1 bdr1 d-xl-flex align-items-start">
+                            <div className="col-sm-6 col-xl-12 shadow P-2" key={job.id}>
+                            <div className="job-list-style1 d-xl-flex align-items-start">
                                 <div className="icon d-flex align-items-center mb20">
                                     {/* <img className="wa" src="/images/team/client-1.png" alt="" /> */}
                                     <span className="fav-icon flaticon-star"></span>
@@ -58,13 +58,13 @@ function MyJobs(){
                                 <div className="details ml20 ml0-xl">
                                     <p>{job.description}</p>
                                     <h4 className="mb-3 text-thm">{job.title}</h4>
-                                    <p className="list-inline-item mb-0">{job.budget.toString()} INJ</p>
-                                    <p className="list-inline-item mb-0 bdrl1 pl15">{job.completed ? 'Expired' : (
+                                    <p className="list-group-item ">{job.budget.toString()} CELO</p>
+                                    <p className="list-group-item mb-0 bdrl1 pl15">{job.completed ? 'Expired' : (
                                         'Ongoing'
                                         // <button className="btn-warning btn" type='button'
                                         // onClick={()=>completeJob(job.id.toString(),job.hiredFreelancer)}>Mark as completed</button>
                                     )}</p>
-                                    <p className="list-inline-item mb-0 bdrl1 pl15">Remote</p>
+                                    <p className="list-group-item mb-0 bdrl1 pl15">Remote</p>
                                     <Link href={'/single-job/'+job.id}>View Job</Link>
                                     <div className="card mt-4">
                                         <div className="card-body">

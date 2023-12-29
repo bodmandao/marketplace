@@ -1,20 +1,21 @@
 import Footer from "../../components/Footer"
-import MyJobs from "../../components/MyJobs"
+import MyHiredJobsListing from "../../components/MyHiredJobs"
 import Navbar from "../../components/Navbar"
 import Brand from "../../components/Brand"
 
 
-function MyJobListing(){
+function MyHiredJob(){
     return (
-        <main className="wrapper">
+        <main className="wrapper ovh">
+              {/* <div className="preloader"></div> */}
             <Navbar />
             <Brand />
             <div className="body_content">
-               <MyJobs />
+               <MyHiredJobsListing />
                 <Footer />
             </div>
         </main>
     )
 }
 
-export default MyJobListing
+export default MyHiredJob
