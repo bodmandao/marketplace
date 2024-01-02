@@ -43,7 +43,7 @@ function PopularService(){
     },[freelancers])
     return (
         
-        <section className="mt-5 bg-white">
+        <section className="mt-5 ">
         <div className="container">
             <div className="row align-items-center ">
                 <div className="col-lg-9">
