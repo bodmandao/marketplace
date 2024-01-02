@@ -43,7 +43,7 @@ function PopularService(){
     },[freelancers])
     return (
         
-        <section className="mt-5">
+        <section className="mt-5 bg-white">
         <div className="container">
             <div className="row align-items-center ">
                 <div className="col-lg-9">
@@ -99,6 +99,7 @@ function PopularService(){
                              src={freelancer.images[1]} alt="Gig Image" />
 
                             <div className="card-body">
+                                <h4 className="card-title text-center">{freelancer.gigTitle}</h4>
                                 <h5 className="card-title">{freelancer.gigTitle}</h5>
                                 <p className="card-text">Starting price : {freelancer.starting_price.toString()}</p>
                                 <Link className="btn btn-primary" href={'/freelancer/'+freelancer.freelancerAddress}>visit profile</Link>
