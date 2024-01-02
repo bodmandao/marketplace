@@ -78,7 +78,7 @@ function FreelancerPage({ address }: any) {
                   <h5 className="card-title">Description</h5>
                   <p className="card-text">{currentFreelancerDetails.gitDescription}</p>
                   <p className="card-text">Starting price: 
-                    <span className="badge bg-secondary mx-1">
+                    <span className="badge bg-warning mx-1">
                       {currentFreelancerDetails.starting_price.toString()} CELO
                     </span>
                   </p>
