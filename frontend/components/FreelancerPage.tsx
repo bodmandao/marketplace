@@ -47,7 +47,7 @@ function FreelancerPage({ address }: any) {
               }
             `}
           </style>
-          <div className="row mt-5">
+          <div className="row my-5">
             <div className="col-md-6">
               <div className="card" style={{ width: '18rem' }}>
                 {/* <img src={currentFreelancerDetails?.images[1]} 
