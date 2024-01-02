@@ -30,7 +30,7 @@ function RegisterEmployer(){
                     `
                 }
             </style>
-        <div className="container mb-5">
+        <div className="container mb-5 bg-white">
             <div className="row">
                 <div className="col-lg-6 m-auto wow fadeInUp" >
                     <div className="main-title text-center my-2">
