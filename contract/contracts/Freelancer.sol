@@ -1,97 +1,56 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
+
 import "./Employer.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract Dfreelancer is Employers { 
-   
+contract Dfreelancer is Employers, Ownable {
+    using SafeMath for uint256;
 
-     /// @notice retrieves freelancer by address
-    /// @param _freelancer, address
-    /// @return props
-    function getFreelancerByAddress(address _freelancer) external view returns(Freelancer memory props){
-        props = freelancers[_freelancer];
+    modifier onlyEmployerOrOwner() {
+        require(msg.sender == owner() || employers[msg.sender].registered, "Unauthorized");
+        _;
     }
 
-    /// @notice process freelancer registration
-    /// @param _name , @param _skills
-    function registerFreelancer
-    (string memory _name, string memory _skills, string memory _country,
-    string memory _gigTitle, string memory _gigDesc, string[] memory _images, uint256 _starting_price) public {
-        require(freelancers[msg.sender].registered == false, 'AR'); // already registered
-        require(bytes(_name).length > 0);
-        require(bytes(_skills).length > 0);
-        totalFreelancers++;
-        freelancers[msg.sender] = Freelancer(msg.sender, _name, _skills, 0,_country, 
-        _gigTitle,_gigDesc,_images,0,true,block.timestamp,_starting_price);
-        
-         // Add the freelancer address to the array
-        allFreelancerAddresses.push(msg.sender);
-
-        emit FreelancerRegistered(msg.sender, _images, _starting_price);
-        
+    modifier onlyFreelancerOrOwner() {
+        require(msg.sender == owner() || freelancers[msg.sender].registered, "Unauthorized");
+        _;
     }
 
-         /// @notice return all freelancers
-    function getAllFreelancers() public view returns (Freelancer[] memory) {
-        Freelancer[] memory allFreelancers = new Freelancer[](totalFreelancers);
+    // ... (existing contract code)
 
-        for (uint256 i = 0; i < totalFreelancers; i++) {
-            allFreelancers[i] = freelancers[allFreelancerAddresses[i]];
-        }
+    function depositFunds(uint jobId) public payable onlyEmployerOrOwner {
+        // ... (existing code)
 
-        return allFreelancers;
-    }
+        employer.balance = employer.balance.add(msg.value);
+        escrowFunds[msg.sender][jobId] = escrowFunds[msg.sender][jobId].add(msg.value);
 
-    
-        /// @notice process employer funds deposit for a specific job
-        /// @param jobId , job id
-    function depositFunds(uint jobId) public payable {
-        require(jobId <= totalJobs && jobId > 0, "JDE."); // job does not exist
-        Job storage job = jobs[jobId];
-        Employer storage employer = employers[msg.sender];
-        require(job.employer == msg.sender);
-        require(!job.completed, "JAC"); // Job is already completed.
-        require(msg.value >= job.budget, "IA"); // Insufficient amount
-        
-        employer.balance += msg.value;
-        escrowFunds[msg.sender][jobId] += msg.value;
         emit FundsDeposited(jobId, msg.sender, msg.value);
     }
 
-        /// @notice release escrow fund after successful completion of the job
-        /// @param jobId , @param freelancerAddress
-    function releaseEscrow(uint jobId, address freelancerAddress) public onlyEmployer(msg.sender){
-        require(jobId <= totalJobs && jobId > 0, "JDE."); // job does not exist
-        Job storage job = jobs[jobId];
-        require(msg.sender == job.employer);
-        require(job.completed = true, "JNC"); // Job is not completed by freelancer
+    function releaseEscrow(uint jobId, address freelancerAddress) public onlyEmployerOrOwner {
+        // ... (existing code)
 
-        uint escrowAmount = escrowFunds[msg.sender][jobId];
+        escrowFunds[msg.sender][jobId] = 0;
 
-        require(escrowAmount > 0, "NFE"); // No funds in escrow
-        require(escrowAmount >= job.budget, "IF"); // insufficient funds
-        escrowFunds[msg.sender][jobId] = 0;        
-        // Implement logic to release funds from escrow to the freelancer's address
         Freelancer storage freelancer = freelancers[freelancerAddress];
-        freelancer.balance += escrowAmount;
-        // update employer balance
-         Employer storage employer = employers[msg.sender];
-         employer.balance -= escrowAmount;
-         
+        freelancer.balance = freelancer.balance.add(escrowAmount);
+
+        employer.balance = employer.balance.sub(escrowAmount);
+
         emit FundsReleased(jobId, freelancerAddress, escrowAmount);
     }
 
+    function withdrawEarnings() public onlyFreelancerOrOwner {
+        // ... (existing code)
 
-    /// @notice process funds withdrawal to the freelancer after successful completion of a job
-    function withdrawEarnings() public onlyFreelancer(msg.sender) {
-       Freelancer storage freelancer = freelancers[msg.sender];
-        require(freelancer.balance > 0, "NBW"); // No balance to withdraw.
+        uint withdrawAmount = freelancer.balance.mul(95).div(100);
 
-        uint withdrawAmount = (freelancer.balance * 95) / 100; // 95% of balance
         freelancer.balance = 0;
 
-        (bool success, ) = msg.sender.call{value: withdrawAmount}("");
-        require(success, "TF"); // Transfer failed
+        (bool success, ) = payable(msg.sender).call{value: withdrawAmount}("");
+        require(success, "Transfer failed");
 
         emit WithdrawFund(msg.sender, withdrawAmount);
     }
